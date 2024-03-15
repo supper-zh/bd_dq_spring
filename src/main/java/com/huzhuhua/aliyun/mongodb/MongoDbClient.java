@@ -1,4 +1,4 @@
-package com.aliyun.mongodb;
+package com.huzhuhua.aliyun.mongodb;
 
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;

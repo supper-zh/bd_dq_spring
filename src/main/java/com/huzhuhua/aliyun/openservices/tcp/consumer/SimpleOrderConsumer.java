@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.aliyun.openservices.tcp.consumer;
+package com.huzhuhua.aliyun.openservices.tcp.consumer;
 
 import com.aliyun.openservices.ons.api.ONSFactory;
 import com.aliyun.openservices.ons.api.PropertyKeyConst;
@@ -57,7 +57,10 @@ public class SimpleOrderConsumer {
 
     private final MessageOrderListener messageOrderListener;
 
-    // 通过构造函数注入MessageOrderListener
+    // Spring推荐依赖于接口编程而不是具体实现
+    // 通过构造函数注入MessageOrderListener，Spring会自动将其作为 MessageOrderListener 的一个实现MessageOrderListenerImpl注入到任何需要它的地方
+    // MessageOrderListenerImpl 的 consume 方法将会被调用来处理接收到的消息。
+    // 这是利用Spring依赖注入特性的典型用法，允许将具体的实现（在这个是 MessageOrderListenerImpl）解耦和动态地注入到使用它的组件中
     @Autowired
     public SimpleOrderConsumer(MessageOrderListener messageOrderListener) {
         this.messageOrderListener = messageOrderListener;
@@ -86,6 +89,7 @@ public class SimpleOrderConsumer {
         //             }
         //         });
         // consumer.subscribe(orderTopic, tag, new MessageOrderListenerImpl());
+        // // Spring推荐依赖于接口编程而不是具体实现，可以增加代码的灵活性和可维护性---依赖反转原则（Dependency Inversion Principle）和面向接口编程
         consumer.subscribe(orderTopic, tag, messageOrderListener); // 使用注入的messageOrderListener实例
 
         consumer.start();

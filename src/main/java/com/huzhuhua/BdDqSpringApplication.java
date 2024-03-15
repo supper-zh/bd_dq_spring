@@ -1,4 +1,4 @@
-package com.huzhuhua.bd;
+package com.huzhuhua;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

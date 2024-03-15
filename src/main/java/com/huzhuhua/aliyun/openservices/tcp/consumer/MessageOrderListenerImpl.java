@@ -1,4 +1,4 @@
-package com.aliyun.openservices.tcp.consumer;
+package com.huzhuhua.aliyun.openservices.tcp.consumer;
 
 import com.aliyun.openservices.ons.api.Message;
 import com.aliyun.openservices.ons.api.order.ConsumeOrderContext;
@@ -30,6 +30,7 @@ public class MessageOrderListenerImpl implements MessageOrderListener {
                                     @Value("${mongodb.collection}") String collectionName) {
         MongoDatabase database = mongoClient.getDatabase(databaseName);
         this.collection = database.getCollection(collectionName);
+        // System.out.println("注入了");
     }
 
     @Override
