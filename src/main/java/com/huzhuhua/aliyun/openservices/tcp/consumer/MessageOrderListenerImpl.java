@@ -8,6 +8,7 @@ import com.aliyun.openservices.ons.api.order.OrderAction;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.InsertOneResult;
 import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ public class MessageOrderListenerImpl implements MessageOrderListener {
         try {
             String body = new String(message.getBody(), "UTF-8");
             logger.info("Received message: {}", body);
+            // System.out.println(body);
 
             if (body.isEmpty()) {
                 logger.warn("Received empty message body.");
@@ -45,11 +47,11 @@ public class MessageOrderListenerImpl implements MessageOrderListener {
             }
 
             Document doc = Document.parse(body);
-            List<Document> documents = new ArrayList<>();
-            documents.add(doc);
-
-            collection.insertMany(documents);
-            logger.info("Inserted documents into MongoDB");
+            // List<Document> documents = new ArrayList<>();
+            // documents.add(doc);
+            // collection.insertMany(documents);
+            InsertOneResult insertOneResult = collection.insertOne(doc);
+            logger.info("Inserted documents into MongoDB"+insertOneResult.getInsertedId());
 
         } catch (Exception e) {
             logger.error("Error processing message: ", e);
